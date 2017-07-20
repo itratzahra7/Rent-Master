@@ -1,0 +1,55 @@
+<head>
+  <title>Rent Master</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body class="<%= controller.controller_name %>">
+
+  <div id="banner">
+    <%= image_tag("rentmaster-logo.png", :class => "rent_master_logo") %>
+    <div id="sign_out">
+      <% if current_admin %>
+        <%= link_to "Sign Out", destroy_admin_session_path, :method => 'delete' %>
+      <% end %>
+      <% if current_company %>
+        <%= link_to "Sign Out", destroy_company_session_path, :method => 'delete' %>
+      <% end %>
+      <% if !current_admin && !current_company %>
+        <div class="btn-group">
+            <%= link_to "Sign in", new_company_session_path, {method: 'get' , :class => "btn btn-success sign_in"} %>
+          <%= link_to "Register Company", new_company_registration_path, {method: 'get' , :class => "btn btn-success register_company"} %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div id="columns">
+    <div id="side">
+      <% if admin_signed_in?  %>
+        <div id="admin_panel_side" >
+          <%= link_to "Companies",  companies_path %>
+          <br />
+          <%= link_to "Industries", industries_path %>
+          <br />
+        </div>
+      <% else %>
+        <div id ="feature" >
+          <h4> Featured Companies </h4>
+          <br />
+          <% @featured_companies.each do |featured_company| %>
+            <%= image_tag featured_company.logo.url(:thumb) ,{:class => :logo_image }%> 
+            <%= link_to featured_company.name, company_path(featured_company), {:class => "featured_companies"} %>
+            <br />
+            <br />
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div id="main">
+      <%= yield %>
+    </div>
+  </div>
+</body>

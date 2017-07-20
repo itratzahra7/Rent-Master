@@ -1,0 +1,70 @@
+<h1>Update Company</h1>
+<br />
+<%= form_for(@company, :html =>{multipart: true}, method: :put) do |f| %>
+  <% if @company.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@company.errors.count, "error") %> prohibited this company from being saved:</h2>
+      <ul>
+      <% @company.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<h2> Select Industries </h2>
+<br />
+<%= select_tag :industries, options_from_collection_for_select(@active_industries, "id", "name"), {:multiple => true, :class => "select_industry"} %>
+
+<br />
+<br />
+<h2>Company Detail</h2>
+<br />
+<div id="company_info">
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br>
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description, rows: 6 %>
+  </div>
+   <div class="field">
+    <%= f.label :phone %><br>
+    <%= f.text_field :phone%>
+  </div>
+  <% if current_admin %>
+    <div class="field">
+    <%= f.label "Featured" %>
+    <br />
+    <%= f.radio_button :featured, 1  %>
+    <%= f.label 'Yes', inline: true  %>
+    <%= f.radio_button :featured, 0, :checked => true %>
+    <%= f.label 'No', inline: true  %>
+    </div>
+  <% end %>
+  </div>
+  <% if current_company %>
+    <div class="field">
+    <%= f.label :product_images %>
+    <br />
+      <%= file_field_tag "images[]", type: :file, multiple: true %>
+    </div>
+    <% end %>
+    <br />
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+<%= link_to 'Show', @company %> 
+<%= link_to 'Back', companies_path %>
+<% if request.referer == "http://localhost:3000/companies/sign_up" %>
+<script language="javascript" type="text/javascript">
+   var link = document.getElementById('company_info');
+   link.style.display = 'none'; 
+</script>
+ <% end %>

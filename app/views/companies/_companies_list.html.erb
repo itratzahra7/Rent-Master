@@ -1,0 +1,46 @@
+
+<div class="table-responsive">
+<table class="table table-striped table-inverse table-bordered table-hover">
+  <thead class="table-success">
+    <tr>
+      <th><%= sort_column "name", params[:industry_id]  %></th>
+      <th><%= sort_column "email", params[:industry_id] %></th>
+      <th><%= sort_column "phone", params[:industry_id] %></th>
+      <th><%= sort_column "created_at", params[:industry_id], "Registered Date" %></th>
+      <th><%= sort_column "products_count", params[:industry_id], "Total Products" %></th>
+      <th>Industries</th>
+      <% if admin_signed_in? %>
+      <th>Actions</th>
+      <% end %>
+    </tr>
+  </thead>
+  <br />
+ <tbody>
+    <% @companies.each do |company| %>
+      <tr>
+        <td><%=link_to company.name, company_path(company) %></td>
+        <td><%= company.email %></td>
+        <td><%= company.phone %></td>
+        <td><%= company.created_at.to_date %></td>
+        <td><%= company.products_count %></td>
+        <td>
+          <% company.industries.each do |industry| %>
+            <%= industry.name + ',' %>
+        <% end %>
+        </td>
+        <% if admin_signed_in? %>
+          <td>
+            <%= link_to 'Show', company_path(company)%>
+            <%= link_to 'Edit', edit_company_path(company)%>
+            <%= link_to 'Destroy', company_path(company), method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br />
+<br />
+<br />
+<%= will_paginate @companies %>
+</div>
