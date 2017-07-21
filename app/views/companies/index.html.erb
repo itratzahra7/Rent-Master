@@ -1,7 +1,11 @@
+<% unless notice.blank? %>
+  <p id="notice"><%= notice %></p>
+<% end %>
+
 <h2>Registered Companies</h2>
 
 <div id="industry_dropdown">
-<%= select_tag :select_industry, content_tag(:option, 'All Industries', :value => "")+options_from_collection_for_select(@active_industries, "id", "name"), {:class => "industry_dropdown form-control"} %>
+  <%= select_tag :select_industry, content_tag(:option, 'All Industries', value: "")+options_from_collection_for_select(@active_industries, "id", "name"), {class: "industry_dropdown form-control"} %>
 </div>
 
 
@@ -9,6 +13,6 @@
 <br />
 <br />
 
-<div id="hello">
+<div id="companies_list">
   <%= render partial: "companies_list" %>
 </div>

@@ -28,6 +28,9 @@ gem 'jquery-rails'
 
 gem 'bootstrap-sass'
 
+
+gem 'jquery-turbolinks'
+
 gem 'will_paginate-bootstrap'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby

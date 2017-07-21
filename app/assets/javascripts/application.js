@@ -9,14 +9,17 @@
 //
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
-////= require bootstrap.min.js
 //= require jquery
+//= require jquery.turbolinks
+//= require bootstrap.min.js
 //= require jquery_ujs
-//= require turbolinks
 //= require_tree .
 
 $(document).ready(function() {
-  $('.industry_dropdown').on('change', function(){
+  $('body').on('change', '.industry_dropdown', function(){
     $.get('companies/',{industry_id: $(this).val()});
   });
 });
+
+
+//= require turbolinks

@@ -14,29 +14,30 @@
       <% end %>
     </tr>
   </thead>
-  <br />
- <tbody>
-    <% @companies.each do |company| %>
+  <tbody>
+    <% if @companies.blank? %>
       <tr>
-        <td><%=link_to company.name, company_path(company) %></td>
-        <td><%= company.email %></td>
-        <td><%= company.phone %></td>
-        <td><%= company.created_at.to_date %></td>
-        <td><%= company.products_count %></td>
-        <td>
-          <% company.industries.each do |industry| %>
-            <%= industry.name + ',' %>
-        <% end %>
-        </td>
-        <% if admin_signed_in? %>
-          <td>
-            <%= link_to 'Show', company_path(company)%>
-            <%= link_to 'Edit', edit_company_path(company)%>
-            <%= link_to 'Destroy', company_path(company), method: :delete, data: { confirm: 'Are you sure?' } %>
-          </td>
-        <% end %>
+        <td colspan="6"> <center> This industry has no companies </center> </td>
       </tr>
-    <% end %>
+    <% else %>
+      <% @companies.each do |company| %>
+        <tr>
+          <td><%=link_to company.name, company_path(company) %></td>
+          <td><%= company.email %></td>
+          <td><%= company.phone %></td>
+          <td><%= company.created_at.to_date %></td>
+          <td><%= company.products_count %></td>
+          <td><%= company.industries.pluck("name").join(',') %></td>
+          <% if admin_signed_in? %>
+            <td>
+              <%= link_to 'Show', company_path(company)%>
+              <%= link_to 'Edit', edit_company_path(company)%>
+              <%= link_to 'Destroy', company_path(company), method: :delete, data: { confirm: 'Are you sure?' } %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>   
   </tbody>
 </table>
 <br />

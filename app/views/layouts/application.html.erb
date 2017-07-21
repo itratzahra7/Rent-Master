@@ -1,6 +1,5 @@
 <head>
   <title>Rent Master</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
@@ -29,7 +28,7 @@
   <div id="columns">
     <div id="side">
       <% if admin_signed_in?  %>
-        <div id="admin_panel_side" >
+        <div class="admin_panel_side" >
           <%= link_to "Companies",  companies_path %>
           <br />
           <%= link_to "Industries", industries_path %>

@@ -1,4 +1,5 @@
 class IndustriesController < ApplicationController
+ # cancan
   before_action :authenticate_admin!
   before_action :set_industry, only: [:show, :edit, :update, :destroy]
   
@@ -7,7 +8,7 @@ class IndustriesController < ApplicationController
   # GET /industries.json
 
   def index
-    @industries = Industry.all
+    @industries = Industry.paginate(page: params[:page], per_page: 10)
   end
 
   # GET /industries/1
@@ -36,10 +37,8 @@ class IndustriesController < ApplicationController
     respond_to do |format|
       if @industry.save
         format.html { redirect_to industry_url(@industry), notice: 'Industry was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @industry }
       else
         format.html { render action: 'new' }
-        format.json { render json: @industry.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -48,19 +47,12 @@ class IndustriesController < ApplicationController
   # PATCH/PUT /industries/1.json
 
   def update
+    # update outside respond to
    respond_to do |format|
-    h = @industry
-    u = industry_params
-      begin
-        @industry.update(industry_params)
-      rescue Exception => e
-      end
       if @industry.update(industry_params)
         format.html { redirect_to @industry, notice: 'Industry was successfully updated.' }
-        format.json { head :no_content }
       else
         format.html { render action: 'edit' }
-        format.json { render json: @industry.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -72,7 +64,6 @@ class IndustriesController < ApplicationController
     @industry.destroy
     respond_to do |format|
       format.html { redirect_to industries_url }
-      format.json { head :no_content }
     end
   end
 

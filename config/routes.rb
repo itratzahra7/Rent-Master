@@ -3,7 +3,7 @@ RentMaster::Application.routes.draw do
   resources :industries
   resources :companies do
     collection do
-      get 'sort_by_name'
+      #index
       get 'featured_companies'
     end
     member do
